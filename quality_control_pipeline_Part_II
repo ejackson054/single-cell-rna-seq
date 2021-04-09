@@ -1,3 +1,6 @@
+#Generates quality-control plots separated out by cell type, including violinplots with # features and % mito by celltype, 
+#celltype-specific heatmaps with correlation of gene expression between samples, and heatmap showing proportion cell type by sample
+
 library(ggplot2)
 library(data.table)
 library(Seurat)
