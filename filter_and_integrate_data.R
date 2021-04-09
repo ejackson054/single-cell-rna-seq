@@ -21,8 +21,8 @@ library(reshape)
 
 
 ###SET FILENAMES###
-base_dir <- "/lab/page_human_data/emily/single_cell/"
-metadata <- "/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt"
+base_dir <- "/lab/page_human_data/emily/single_cell/"  #directory containing folder bus_output with results for each sample
+metadata <- "/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt" #tab-separated gene metadata file containing, at minimum, columns "gene_name" and "gene_type" (i.e "protein_coding")
 setwd(base_dir)
 
 ###SET QC THRESHOLDS###
