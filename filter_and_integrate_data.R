@@ -19,7 +19,11 @@ library(cowplot)
 library(hash)
 library(reshape)
 
-setwd("/lab/page_human_data/emily/single_cell/")
+
+###SET FILENAMES###
+base_dir <- "/lab/page_human_data/emily/single_cell/"
+metadata <- "/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt"
+setwd(base_dir)
 
 ###SET QC THRESHOLDS###
 
@@ -31,7 +35,7 @@ max_doublet <- 0.8
 samples_list <- c("L16_2576_S1","L16_2577_S2")
 
 ###READ IN GENE METADATA###
-meta <- read.csv("/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt",sep="\t")
+meta <- read.csv(metadata, sep="\t")
 meta <- distinct(meta, gene_name, .keep_all = TRUE)
 rownames(meta) <- meta$gene_name
 
