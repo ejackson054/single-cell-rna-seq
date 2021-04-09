@@ -7,7 +7,7 @@
 ###SET PARAMETERS###
 base_directory <- "/lab/page_human_data/emily/single_cell"   #This should contain bus_output (from Generate_single_cell_matrix.py)
 sample_names <- c("L16_2576_S1","L16_2577_S2")               #Names of the relevant sub-folders in bus_output 
-
+metadata <- "/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt"  #tab-separated gene-level metadata file containing, at minimum, column with gene_name and column with gene_type (i.e."protein-coding")
 
 ###IMPORT PACKAGES###
 library(magrittr)
@@ -29,7 +29,7 @@ library(reshape)
 
 
 ####READ IN METADATA###
-meta <- read.csv("/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt",sep="\t")
+meta <- read.csv(metadata, sep="\t")
 meta <- distinct(meta, gene_name, .keep_all = TRUE)
 rownames(meta) <- meta$gene_name
 
