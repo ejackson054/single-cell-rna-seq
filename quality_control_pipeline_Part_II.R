@@ -22,6 +22,9 @@ seu <- readRDS(file="integrated_results/integrated_data_processed_labeled.rds")
 DefaultAssay(seu) <- "RNA"
 seu$celltype <- Idents(seu)
 
+###Drop unassigned cells###
+seu <- subset(seu, subset = celltype != "Unassigned")
+
 ###Make correlation heatmaps and plots for each cell type###
 #https://github.com/satijalab/seurat/issues/1552
 
@@ -159,6 +162,3 @@ dev.off()
 png("quality_control/umap_by_sample.png", width = 1000, height = 1000, units = "px")
 DimPlot(seu, reduction = "umap", split.by = "orig.ident", ncol=6 )  + theme(legend.position = 'none')
 dev.off()
-
-
-
