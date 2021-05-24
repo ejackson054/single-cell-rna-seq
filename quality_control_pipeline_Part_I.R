@@ -9,6 +9,7 @@ base_directory <- "/lab/page_human_data/emily/single_cell"   #This should contai
 sample_names <- c("L16_2576_S1","L16_2577_S2")               #Names of the relevant sub-folders in bus_output 
 metadata <- "/lab/Page_lab-users/Alex/gtex/index/gencode.v24.annotation.basic_ccds_nopar.gene_tx_annotable.txt"  #tab-separated gene-level metadata file containing, at minimum, column with gene_name and column with gene_type (i.e."protein-coding")
 
+
 ###IMPORT PACKAGES###
 library(magrittr)
 library(DropletUtils)
@@ -137,14 +138,14 @@ dev.off()
 
 
 ###CELL COUNT TABLE###
-
-min_200 <- table(seu@meta.data$orig.ident)
-
 seu_500 <- subset(seu, subset = nFeature_RNA > 500)
 min_500 <- table(seu_500@meta.data$orig.ident)
 
 seu_500_mito_10 <- subset(seu_500, subset = percent.mt <10)
 min_500_mito_10 <- table(seu_500_mito_10@meta.data$orig.ident)
+
+seu_500_mito_15 <- subset(seu_500, subset = percent.mt <15)
+min_500_mito_15 <- table(seu_500_mito_15@meta.data$orig.ident)
 
 seu_1000 <- subset(seu, subset = nFeature_RNA > 1000)
 min_1000 <- table(seu_1000@meta.data$orig.ident)
@@ -152,11 +153,14 @@ min_1000 <- table(seu_1000@meta.data$orig.ident)
 seu_1000_mito_10 <- subset(seu_1000, subset = percent.mt <10)
 min_1000_mito_10  <- table(seu_1000_mito_10@meta.data$orig.ident)
 
-total <- rbind(min_200, min_500, min_500_mito_10, min_1000, min_1000_mito_10)
+seu_1000_mito_15 <- subset(seu_1000, subset = percent.mt <15)
+min_1000_mito_15  <- table(seu_1000_mito_15@meta.data$orig.ident)
+
+total <- rbind(min_500, min_500_mito_15, min_500_mito_10, min_1000, min_1000_mito_15, min_1000_mito_10)
 write.table(total, file = "quality_control/cells_per_sample.csv", sep = ",", col.names=NA)
 
 total <- melt(total)
-total$X1 <- factor(total$X1, levels= c("min_200","min_500","min_500_mito_10","min_1000","min_1000_mito_10"))
+total$X1 <- factor(total$X1, levels= c("min_500","min_500_mito_15","min_500_mito_10","min_1000","min_1000_mito_15","min_1000_mito_10"))
 
 png("quality_control/cells_per_sample.png", width = 1480, height = 740, units = "px")
 ggplot(total, aes(factor(X2), value, fill = X1)) + 
